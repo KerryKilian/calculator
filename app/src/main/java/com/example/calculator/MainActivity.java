@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
         btnEnter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                tvCurrentCalculation.setText(makeClear(values[0]) + action + makeClear(values[1]));
+                boolean showValues = true;
                 switch(action) {
                     case "+":
                         result = values[0] + values[1];
@@ -127,6 +127,17 @@ public class MainActivity extends AppCompatActivity {
                     case "÷":
                         result = values[0] / values[1];
                         break;
+                    case "²":
+                        // already set when clicking on square button
+                        showValues = false;
+                        break;
+                    case "√":
+                        // already set when clicking on radical button
+                        showValues = false;
+                        break;
+                }
+                if (showValues == true) {
+                    tvCurrentCalculation.setText(makeClear(values[0]) + action + makeClear(values[1]));
                 }
 
 //                if (result % 1 == 0) {
@@ -182,10 +193,13 @@ public class MainActivity extends AppCompatActivity {
         btnRadical.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                action = "√";
+                values[0] = result;
 //                double current = Double.parseDouble(tvResult.getText().toString());
                 tvCurrentCalculation.setText("√" + makeClear(result)); // current
 //                tvResult.setText(String.valueOf(Math.sqrt(current)));
                 setResult(Math.sqrt(result));
+
             }
         });
 
@@ -193,8 +207,12 @@ public class MainActivity extends AppCompatActivity {
         btnSquare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                action = "²";
+                values[0] = result;
+                values[1] = 0;
                 tvCurrentCalculation.setText(makeClear(result) + "²");
                 setResult(result * result);
+
             }
         });
 
